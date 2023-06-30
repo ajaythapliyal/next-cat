@@ -1,9 +1,30 @@
 import Card from "@/components/Card";
+import { useIsScrolledToBottom } from "@/hooks/hooks";
+import { useEffect, useState } from "react";
 
 export default function Cats({ cats }) {
+  const [storedCats, setStoredCats] = useState(cats);
+  const isScrolledToBottom = useIsScrolledToBottom();
+
+  useEffect(() => {
+    (async () => {
+      if (isScrolledToBottom) {
+        const response = await fetch(
+          "https://api.thecatapi.com/v1/images/search?limit=15",
+          { headers: { "x-api-key": process.env.API_KEY } }
+        );
+        const catsResp = await response.json();
+        setStoredCats([...storedCats, ...catsResp]);
+      }
+    })();
+  }, [isScrolledToBottom]);
+
   return (
-    <div className="flex flex-wrap justify-center gap-3 my-5">
-      {cats.map((cat) => (
+    <div
+      id="cat-container"
+      className="flex flex-wrap justify-center gap-3 my-5"
+    >
+      {storedCats.map((cat) => (
         <Card key={cat.id} cat={cat} />
       ))}
     </div>
