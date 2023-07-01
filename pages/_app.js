@@ -4,9 +4,9 @@ import "@/styles/normalize.css";
 
 export default function App({ Component, pageProps }) {
   return (
-    <>
+    <div className="bg-tertiary min-h-screen">
       <Header></Header>
       <Component {...pageProps} />
-    </>
+    </div>
   );
 }
