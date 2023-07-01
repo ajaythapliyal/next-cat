@@ -24,8 +24,8 @@ export default function Cats({ cats }) {
       id="cat-container"
       className="flex flex-wrap justify-center gap-3 my-5"
     >
-      {storedCats.map((cat) => (
-        <Card key={cat.id} cat={cat} />
+      {storedCats.map((cat, index) => (
+        <Card key={index} cat={cat} />
       ))}
     </div>
   );
